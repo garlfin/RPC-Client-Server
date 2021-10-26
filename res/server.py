@@ -22,7 +22,7 @@ class rpc_server:
     def respond(self, sender):
         return self.response + " " + sender + "!"
     def retrieveStats(self, sender):
-        self.statsFetched = self.jsonRead.retrieveClients().get(sender)
+        self.statsFetched = self.jsonRead.retrieveFromJSON("Clients").get(sender)
         if self.statsFetched:
             return [0, sender, str(self.statsFetched)]
         else:

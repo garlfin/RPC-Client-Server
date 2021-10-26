@@ -17,7 +17,7 @@ def StartClient(client_name):
         Client.listen(client.getDomainFromAddress(address))
         Client.sendMessage()
     except ConnectionRefusedError:
-                print("["+str(identity)+"] Machine refused connection.")
+                print("["+str(client_name)+"] Machine refused connection.")
 
 Threads = []
 Threads.append(threading.Thread(target = startServer))

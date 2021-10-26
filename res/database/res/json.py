@@ -1,5 +1,18 @@
 import json
 
+class notFoundInJsonDB(Exception):
+    """Exception raised for errors in the JSON lookup
+    """
+
+    def __init__(self, error_name, message="Cannot find in json file. Check for corruption or empty file."):
+        self.error_name = error_name
+        self.message = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return f'{self.error_name} -> {self.message}'
+
+
 class jsonReaderWriter:
     "Reads and writes JSON"
     def __init__(self, jsonFile):
@@ -16,5 +29,10 @@ class jsonReaderWriter:
         self.file.close()
     def debugPrintList(self):
         self.printInfo(str(self.parsedJsonList))
-    def retrieveClients(self):
-        return self.parsedJsonList["Clients"]
+    def retrieveFromJSON(self, toBeRetrieved):
+        self.temp = self.parsedJsonList.get(toBeRetrieved)
+        if self.temp:
+            return self.temp
+        else:
+            raise notFoundInJsonDB(toBeRetrieved)
+        
