@@ -1,5 +1,6 @@
 import json
 
+
 class notFoundInJsonDB(Exception):
     """Exception raised for errors in the JSON lookup
     """
@@ -13,26 +14,34 @@ class notFoundInJsonDB(Exception):
         return f'{self.error_name} -> {self.message}'
 
 
+def printInfo(message):
+    print("[JSONParse] {0}".format(message))
+
+
 class jsonReaderWriter:
-    "Reads and writes JSON"
+    """Reads and writes JSON"""
+
     def __init__(self, jsonFile):
+        self.temp = None
         self.file = open(jsonFile, "r+")
         self.parsedJsonList = None
-    def printInfo(self, message):
-        print("[JSONParse] {0}".format(message))
+
     def readFile(self):
         self.parsedJsonList = json.load(self.file)
+
     def writeFile(self):
         self.file.truncate(0)
         json.dump(self.parsedJsonList, self.file, ensure_ascii=True, indent=4)
+
     def closeFile(self):
         self.file.close()
+
     def debugPrintList(self):
-        self.printInfo(str(self.parsedJsonList))
+        printInfo(str(self.parsedJsonList))
+
     def retrieveFromJSON(self, toBeRetrieved):
         self.temp = self.parsedJsonList.get(toBeRetrieved)
         if self.temp:
             return self.temp
         else:
             raise notFoundInJsonDB(toBeRetrieved)
-        

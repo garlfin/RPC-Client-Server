@@ -1,4 +1,6 @@
 from enum import Enum
+
+
 class LookupKeyType(Enum):
     UnknownLookupKey = 0
     Facebook = 1
@@ -10,6 +12,8 @@ class LookupKeyType(Enum):
     SCID = 7
     SignInWithApple = 8
     GameCenterTP = 9
+
+
 class ReqRepType(Enum):
     UnknownReqRepType = 0
     Login = 2
