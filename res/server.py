@@ -1,3 +1,4 @@
+from xmlrpc.server import SimpleXMLRPCRequestHandler
 import threading
 from xmlrpc.server import SimpleXMLRPCServer
 from socketserver import ThreadingMixIn
@@ -7,6 +8,8 @@ from res.rpc_enum import errorKeyType
 class SimpleThreadedXMLRPCServer(ThreadingMixIn, SimpleXMLRPCServer):
     pass
 
+class requestHandler(SimpleXMLRPCRequestHandler):
+    rpc_paths = ('/RPC',)
 
 class rpcServer:
     response = "Hello"
@@ -19,22 +22,22 @@ class rpcServer:
         self.statsFetched = None
 
     def printInfo(self, message):
-        print("[{0}] {1}".format(str(self.identity), message))
+        print("[{0}] {1}".format(str(self.server.server_address), message))
+
+    def close(self, reason = "Not specified"):
+        self.server.server_close()
 
     def initialize(self, address):
-        self.server = SimpleThreadedXMLRPCServer(address, logRequests=False)
+        self.server = SimpleThreadedXMLRPCServer(address, logRequests=False,requestHandler=requestHandler)
         self.printInfo("Listening on port 8000")
-
-    def respond(self, sender):
-        return self.response + " " + sender + "!"
 
     def retrieveStats(self, sender):
         self.statsFetched = self.jsonRead.retrieveFromJSON("Clients").get(sender)
+        self.printInfo("Retrieved stats for {0}".format(sender))
         if self.statsFetched:
             return [0, sender, str(self.statsFetched)]
         else:
             return [1, errorKeyType.notFound.value]
-
     def registerFunc(self, function_to_register):
         self.server.register_function(function_to_register)
         self.printInfo("Registered '" + function_to_register.__name__ + "' on server.")

@@ -10,14 +10,14 @@ dataPath = os.getcwd()+"/res/database/clients/db.json"
 def startServer():
     Server = server.rpcServer(dataPath)
     Server.initialize(address)
-    Server.register([Server.respond, Server.retrieveStats])
+    Server.register([Server.retrieveStats, Server.close])
 
 
 def StartClient(client_name):
     identity = threading.current_thread().ident
     try:
         Client = client.rpc_client(client_name)
-        Client.listen(client.getDomainFromAddress(address))
+        Client.listen(client.getDomainFromAddress(address)+"RPC")
         Client.sendMessage()
     except ConnectionRefusedError:
         print("[" + str(client_name) + "] Machine refused connection.")

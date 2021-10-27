@@ -1,9 +1,11 @@
 import xmlrpc.client
 from res.rpc_enum import errorKeyType, errorSyn
 
-def getDomainFromAddress(address):
-    return "http://" + address[0] + ":" + str(address[1]) + "/"
-
+def getDomainFromAddress(address, ssl=False):
+    if ssl:
+        return "https://" + address[0] + ":" + str(address[1]) + "/"
+    else:
+        return "http://" + address[0] + ":" + str(address[1]) + "/"
 class rpc_client: 
     def __init__(self, name):
         self.name = name
@@ -21,6 +23,8 @@ class rpc_client:
             self.proxy = xmlrpc.client.ServerProxy(domain)
         except xmlrpc.client.Fault as err:
             self.errorHandler(err)
+    def close(self):
+        self.proxy.system 
     def whatsMyName(self):
         self.printInfo("My name is %s." % self.name) 
     def sendMessage(self):
@@ -28,6 +32,7 @@ class rpc_client:
         self.returnedStats = self.proxy.retrieveStats(str(self.name))
         if self.returnedStats[0] == 0:
             self.printInfo("[{0}: ".format(self.returnedStats[1]) + self.returnedStats[2]+"]")
+            self.close()
         else:
             if self.returnedStats[0] == 1:
                 self.printInfo(errorSyn[errorKeyType(self.returnedStats[1])])
