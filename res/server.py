@@ -2,7 +2,7 @@ import threading
 from xmlrpc.server import SimpleXMLRPCServer
 from socketserver import ThreadingMixIn
 from res.database.res.json import jsonReaderWriter
-
+from res.rpc_enum import errorKeyType
 
 class SimpleThreadedXMLRPCServer(ThreadingMixIn, SimpleXMLRPCServer):
     pass
@@ -33,7 +33,7 @@ class rpcServer:
         if self.statsFetched:
             return [0, sender, str(self.statsFetched)]
         else:
-            return [1]
+            return [1, errorKeyType.notFound.value]
 
     def registerFunc(self, function_to_register):
         self.server.register_function(function_to_register)

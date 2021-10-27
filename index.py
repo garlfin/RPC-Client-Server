@@ -4,7 +4,7 @@ import threading
 import os
 
 address = ("localhost", 8000)
-dataPath = os.getcwd()+"/res/database/res/testfile.json"
+dataPath = os.getcwd()+"/res/database/clients/db.json"
 
 
 def startServer():
@@ -24,7 +24,7 @@ def StartClient(client_name):
 
 
 currentWorkingThreads = [threading.Thread(target=startServer), threading.Thread(target=StartClient, args=["0442246"]),
-                         threading.Thread(target=StartClient, args=["galim"])]
+                         threading.Thread(target=StartClient, args=["5561111"])]
 
 for thread in currentWorkingThreads:
     thread.start()

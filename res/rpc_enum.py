@@ -1,5 +1,21 @@
 from enum import Enum
+from os import error 
 
+class errorKeyType(Enum):
+    """"Errors from the server"""
+    notFound = 0
+    unknown = 1
+    noAccount = 2
+    serverError = 3
+    otherError = 4
+
+errorSyn = {
+    errorKeyType.notFound : "[ERROR] Stats not found",
+    errorKeyType.unknown : "[ERROR] Unknown error",
+    errorKeyType.noAccount : "[ERROR] Account not found",
+    errorKeyType.serverError : "[ERROR] Server error",
+    errorKeyType.otherError : "[ERROR] Not specified"
+}
 
 class LookupKeyType(Enum):
     UnknownLookupKey = 0
