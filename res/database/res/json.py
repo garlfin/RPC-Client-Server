@@ -1,7 +1,8 @@
-import json
+# noinspection PyUnresolvedReferences
+import json as jsonlib
 
 
-class notFoundInJsonDB(Exception):
+class NotFoundInJsonDB(Exception):
     """Exception raised for errors in the JSON lookup
     """
 
@@ -18,20 +19,20 @@ def printInfo(message):
     print("[JSONParse] {0}".format(message))
 
 
-class jsonReaderWriter:
+class JSONReaderWriter:
     """Reads and writes JSON"""
 
-    def __init__(self, jsonFile):
+    def __init__(self, json_file):
         self.temp = None
-        self.file = open(jsonFile, "r+")
+        self.file = open(json_file, "r+")
         self.parsedJsonList = None
 
     def readFile(self):
-        self.parsedJsonList = json.load(self.file)
+        self.parsedJsonList = jsonlib.load(self.file)
 
     def writeFile(self):
         self.file.truncate(0)
-        json.dump(self.parsedJsonList, self.file, ensure_ascii=True, indent=4)
+        jsonlib.dump(self.parsedJsonList, self.file, ensure_ascii=True, indent=4)
 
     def closeFile(self):
         self.file.close()
@@ -39,9 +40,9 @@ class jsonReaderWriter:
     def debugPrintList(self):
         printInfo(str(self.parsedJsonList))
 
-    def retrieveFromJSON(self, toBeRetrieved):
-        self.temp = self.parsedJsonList.get(toBeRetrieved)
+    def retrieveFromJSON(self, to_be_retrieved):
+        self.temp = self.parsedJsonList.get(to_be_retrieved)
         if self.temp:
             return self.temp
         else:
-            raise notFoundInJsonDB(toBeRetrieved)
+            raise NotFoundInJsonDB(to_be_retrieved)

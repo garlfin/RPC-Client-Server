@@ -1,5 +1,5 @@
 # RPC-Client-Server
-A RPC Server and client written in python. (JSON is bad kids, don't do it)
+An RPC Server and client written in python. (JSON is bad kids, don't do it)
 
 
 \

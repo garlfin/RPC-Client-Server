@@ -1,24 +1,26 @@
-import res.server as server
+import res.server.server as server
 import res.client as client
 import threading
 import os
+import res.server.keyboardlistener
 
 address = ("localhost", 8000)
 dataPath = os.getcwd()+"/res/database/clients/db.json"
 
 
 def startServer():
-    Server = server.rpcServer(dataPath)
+    Server = server.RpcServer(dataPath)
     Server.initialize(address)
+    KeyboardListener = res.server.keyboardlistener.KeyboardListener(Server)
+    threading.Thread(target=KeyboardListener.enable).start()
     Server.register([Server.retrieveStats, Server.close])
 
 
 def StartClient(client_name):
-    identity = threading.current_thread().ident
     try:
-        Client = client.rpc_client(client_name)
-        Client.listen(client.getDomainFromAddress(address)+"RPC")
-        Client.sendMessage()
+        client_thread = client.RPCClient(client_name)
+        client_thread.listen(client.getDomainFromAddress(address)+"RPC")
+        client_thread.receiveStats()
     except ConnectionRefusedError:
         print("[" + str(client_name) + "] Machine refused connection.")
 
