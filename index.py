@@ -19,7 +19,7 @@ def startServer():
 def StartClient(client_name):
     try:
         client_thread = client.RPCClient(client_name)
-        client_thread.listen(client.getDomainFromAddress(address)+"RPC")
+        client_thread.listen(client.getDomainFromAddress(address, "RPC"))
         client_thread.receiveStats()
     except ConnectionRefusedError:
         print("[" + str(client_name) + "] Machine refused connection.")

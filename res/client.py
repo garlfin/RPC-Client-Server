@@ -2,11 +2,11 @@ import xmlrpc.client
 from res.rpc_enum import ErrorKeyType, errorSyn
 
 
-def getDomainFromAddress(address, ssl=False):
+def getDomainFromAddress(address, other_dir="", ssl=False):
     if ssl:
-        return "https://" + address[0] + ":" + str(address[1]) + "/"
+        return "https://" + address[0] + ":" + str(address[1]) + "/" + other_dir
     else:
-        return "http://" + address[0] + ":" + str(address[1]) + "/"
+        return "http://" + address[0] + ":" + str(address[1]) + "/" + other_dir
 
 
 class RPCClient:

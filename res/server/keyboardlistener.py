@@ -28,7 +28,7 @@ class KeyboardListener:
             return self.doIListen
 
     def startListening(self):
-        self.Server.printInfo("I am always listening 😈")
+        self.Server.printInfo("I am always listening 😈 ")
         while self.doIListen:
             input_data = input()
             input_data_upper = input_data.upper()
