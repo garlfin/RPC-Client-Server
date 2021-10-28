@@ -12,7 +12,7 @@ def startServer():
     Server = server.RpcServer(dataPath)
     Server.initialize(address)
     KeyboardListener = res.server.keyboardlistener.KeyboardListener(Server)
-    threading.Thread(target=KeyboardListener.enable).start()
+    threading.Thread(target=KeyboardListener.status, args=[KeyboardListener.DoIListen.listen]).start()
     Server.register([Server.retrieveStats, Server.close])
 
 
