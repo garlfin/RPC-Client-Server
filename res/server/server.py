@@ -26,9 +26,9 @@ class RpcServer:
 
     def printInfo(self, message, sender=None):
         if sender:
-            print("[{0}-{1}] {2}".format(str(self.server.server_address), sender, message))
+            print(f"[{str(self.server.server_address)}-{sender}] {message}")
         else:
-            print("[{0}] {1}".format(str(self.server.server_address), message))
+            print(f"[{str(self.server.server_address)}] {message}")
 
     def close(self, reason=None):
         if reason:
@@ -42,7 +42,7 @@ class RpcServer:
 
     def retrieveStats(self, sender):
         self.statsFetched = self.jsonRead.retrieveFromJSON("Clients").get(sender)
-        self.printInfo("Retrieved stats for {0}".format(sender), sender)
+        self.printInfo(f"Retrieved stats for {sender}", sender)
         if self.statsFetched:
             return [0, sender, str(self.statsFetched)]
         else:

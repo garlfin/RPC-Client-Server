@@ -16,7 +16,7 @@ class NotFoundInJsonDB(Exception):
 
 
 def printInfo(message):
-    print("[JSONParse] {0}".format(message))
+    print(f"[JSONParse] {message}")
 
 
 class JSONReaderWriter:

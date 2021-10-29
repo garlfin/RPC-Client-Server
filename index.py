@@ -22,7 +22,7 @@ def StartClient(client_name):
         client_thread.listen(client.getDomainFromAddress(address, "RPC"))
         client_thread.receiveStats()
     except ConnectionRefusedError:
-        print("[" + str(client_name) + "] Machine refused connection.")
+        print(f"[{str(client_name)}] Machine refused connection.")
 
 
 currentWorkingThreads = [threading.Thread(target=startServer), threading.Thread(target=StartClient, args=["0442246"]),

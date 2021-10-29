@@ -16,7 +16,7 @@ class RPCClient:
         self.returnedStats = None
 
     def printInfo(self, message):
-        print("[{0}] {1}".format(self.name, message))
+        print(f"[{self.name}] {message}")
 
     def errorHandler(self, err):
         self.printInfo("A fault occurred")
@@ -40,7 +40,7 @@ class RPCClient:
         self.printInfo("Sent %s on port 8000" % self.name)
         self.returnedStats = self.proxy.retrieveStats(str(self.name))
         if self.returnedStats[0] == 0:
-            self.printInfo("[{0}: ".format(self.returnedStats[1]) + self.returnedStats[2] + "]")
+            self.printInfo(f"[{self.returnedStats[1]}: " + self.returnedStats[2] + "]")
         else:
             if self.returnedStats[0] == 1:
                 self.printInfo(errorSyn[ErrorKeyType(self.returnedStats[1])])
